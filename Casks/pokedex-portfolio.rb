@@ -1,6 +1,6 @@
 cask "pokedex-portfolio" do
-  version "1.2"
-  sha256 "f862b6e2ceb9854fcbe5e5cb53295aea889d527d629d49c5a73825db946801c8"
+  version "1.3"
+  sha256 "88f19601b2082e3d060c15173532a911545dcf826800215e4cf7ecc2b4055208"
 
   url "https://github.com/ZitronenCitrat/homebrew-tap/releases/download/pokedex-portfolio-v#{version}/PokePortfolio-#{version}.zip"
   name "Pokédex Portfolio"
