@@ -12,31 +12,6 @@ cask "pokedex-portfolio" do
 
   app "PokePortfolio.app"
 
-  # The collection lives only in User.store; a new version may migrate it. Copy it before every install/upgrade.
-  preflight_steps do
-    if_path_exists "Library/Containers/de.felixfischer.PokedexPortfolioDesktop/Data/Library/" \
-                   "Application Support/de.felixfischer.PokedexPortfolioDesktop/User.store", base: :home do
-      copy "Library/Containers/de.felixfischer.PokedexPortfolioDesktop/Data/Library/" \
-           "Application Support/de.felixfischer.PokedexPortfolioDesktop/User.store",
-           "Documents/PokedexPortfolio-Backups/brew-before-{{version}}/User.store",
-           source_base: :home, target_base: :home
-    end
-    if_path_exists "Library/Containers/de.felixfischer.PokedexPortfolioDesktop/Data/Library/" \
-                   "Application Support/de.felixfischer.PokedexPortfolioDesktop/User.store-wal", base: :home do
-      copy "Library/Containers/de.felixfischer.PokedexPortfolioDesktop/Data/Library/" \
-           "Application Support/de.felixfischer.PokedexPortfolioDesktop/User.store-wal",
-           "Documents/PokedexPortfolio-Backups/brew-before-{{version}}/User.store-wal",
-           source_base: :home, target_base: :home
-    end
-    if_path_exists "Library/Containers/de.felixfischer.PokedexPortfolioDesktop/Data/Library/" \
-                   "Application Support/de.felixfischer.PokedexPortfolioDesktop/User.store-shm", base: :home do
-      copy "Library/Containers/de.felixfischer.PokedexPortfolioDesktop/Data/Library/" \
-           "Application Support/de.felixfischer.PokedexPortfolioDesktop/User.store-shm",
-           "Documents/PokedexPortfolio-Backups/brew-before-{{version}}/User.store-shm",
-           source_base: :home, target_base: :home
-    end
-  end
-
   # Ad-hoc signed, not notarized: without this Gatekeeper refuses the first launch.
   postflight_steps do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/PokePortfolio.app"]
@@ -47,9 +22,13 @@ cask "pokedex-portfolio" do
   zap trash: "~/Library/Containers/de.felixfischer.PokedexPortfolioDesktop"
 
   caveats <<~EOS
-    Before every install and upgrade your collection (User.store) is copied to
-    ~/Documents/PokedexPortfolio-Backups/brew-before-<version>/. `brew uninstall` keeps your data;
-    `brew uninstall --zap` deletes it, including the collection.
+    On the first launch of every new version the app copies your collection
+    (User.store) to its container before anything is migrated:
+      ~/Library/Containers/de.felixfischer.PokedexPortfolioDesktop/Data/Library/
+      Application Support/de.felixfischer.PokedexPortfolioDesktop/Backups/
+
+    `brew uninstall` keeps your data; `brew uninstall --zap` deletes it,
+    including the collection and those backups.
 
     After an update macOS may ask once whether the app may access its own
     data — choose "Allow".

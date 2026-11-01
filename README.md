@@ -28,7 +28,7 @@ brew install --cask zitronencitrat/tap/pokedex-portfolio
 ```
 
 - **No Gatekeeper step needed:** the cask clears the quarantine flag itself.
-- **Your collection is backed up automatically** to `~/Documents/PokedexPortfolio-Backups/` before every install and upgrade.
+- **Your collection is backed up automatically:** on the first launch of every new version the app copies it to its own container (`…/Application Support/de.felixfischer.PokedexPortfolioDesktop/Backups/`, newest 10) before anything is migrated.
 - First launch downloads the card catalog (~20 MB) and the Pokédex (~2 MB).
 
 | Task | Command |
