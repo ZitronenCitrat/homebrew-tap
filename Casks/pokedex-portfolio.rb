@@ -22,6 +22,11 @@ cask "pokedex-portfolio" do
   zap trash: "~/Library/Containers/de.felixfischer.PokedexPortfolioDesktop"
 
   caveats <<~EOS
+    This app is ad-hoc signed and not notarized. The cask clears the quarantine
+    flag for you; if macOS still refuses to open the app, run once:
+
+      xattr -dr com.apple.quarantine "#{appdir}/PokePortfolio.app"
+
     On the first launch of every new version the app copies your collection
     (User.store) to its container before anything is migrated:
       ~/Library/Containers/de.felixfischer.PokedexPortfolioDesktop/Data/Library/
