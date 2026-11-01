@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tap Insights</title>
+<meta name="description" content="Downloads of the apps in the ZitronenCitrat Homebrew tap">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7; --ring: rgba(11,11,11,0.10); --up: #006300;
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,0.10); --up: #0ca30c;
+      --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,0.10); --up: #0ca30c;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 48px; }
+  h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  h2 { font-size: 15px; margin: 0 0 12px; }
+  .sub, .note { color: var(--ink-2); margin: 0; }
+  .note { font-size: 13px; }
+  a { color: inherit; }
+  .card { background: var(--surface); border-radius: 14px; box-shadow: 0 0 0 1px var(--ring); padding: 20px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 24px 0 12px; }
+  .tile .label { display: flex; align-items: center; gap: 8px; color: var(--ink-2); font-size: 13px; }
+  .tile .value { font-size: 34px; font-weight: 600; line-height: 1.1; margin: 6px 0 4px; }
+  .tile .meta { color: var(--muted); font-size: 13px; }
+  .tile .delta { color: var(--up); font-weight: 600; }
+  .swatch { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 12px; font-size: 13px; color: var(--ink-2); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .chart { position: relative; height: 300px; }
+  [hidden] { display: none !important; }
+  .empty { display: grid; place-items: center; height: 100%; color: var(--muted); text-align: center; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  th, td { padding: 8px 6px; border-bottom: 1px solid var(--grid); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td .app { display: inline-flex; align-items: center; gap: 8px; }
+  .grid2 { display: grid; gap: 12px; }
+  .grid2 > * { min-width: 0; }
+  .scroll { overflow-x: auto; }
+  footer { margin-top: 24px; }
+  code { font-size: 12.5px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Tap Insights</h1>
+  <p class="sub">Downloads of the apps in <a href="https://github.com/ZitronenCitrat/homebrew-tap">zitronencitrat/tap</a>. <span id="updated"></span></p>
+
+  <section class="tiles" id="tiles" aria-label="Totals"></section>
+
+  <div class="grid2">
+    <section class="card" aria-labelledby="chart-title">
+      <h2 id="chart-title">Cumulative downloads</h2>
+      <div class="legend" id="legend"></div>
+      <div class="chart"><canvas id="chart" role="img" aria-label="Cumulative downloads per app over time"></canvas><div class="empty" id="empty" hidden></div></div>
+    </section>
+
+    <section class="card" aria-labelledby="table-title">
+      <h2 id="table-title">Downloads per version</h2>
+      <div class="scroll"><table>
+        <thead><tr><th>App</th><th>Version</th><th>Released</th><th class="num">Downloads</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table></div>
+    </section>
+  </div>
+
+  <footer class="note">
+    Homebrew publishes no install analytics for third-party taps. Every <code>brew install</code> and <code>brew upgrade</code>
+    downloads the app's release zip from GitHub, so these counts are installs + updates (+ manual downloads), not unique users.
+    Collected daily by a GitHub Action from the GitHub Releases API.
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const fmt = new Intl.NumberFormat("en");
+const day = d => new Date(d + (d.length === 10 ? "T00:00:00Z" : "")).toLocaleDateString("en", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+let data, chart;
+
+// Color follows the app, never its rank: slots go by first release date (oldest first), so a new app takes the next slot.
+function slots(casks) {
+  const order = [...casks].sort((a, b) => (a.versions[0]?.published ?? "9").localeCompare(b.versions[0]?.published ?? "9"));
+  return Object.fromEntries(order.map((c, i) => [c.token, `--s${Math.min(i + 1, 4)}`]));
+}
+
+function sevenDayDelta(token) {
+  const h = data.history, last = h[h.length - 1];
+  const cutoff = new Date(Date.parse(last.date + "T00:00:00Z") - 7 * 864e5).toISOString().slice(0, 10);
+  const base = [...h].reverse().find(e => e.date <= cutoff) ?? h[0];
+  return base === last ? null : (last.totals[token] ?? 0) - (base.totals[token] ?? 0);
+}
+
+function render() {
+  const color = slots(data.casks);
+  const casks = [...data.casks].sort((a, b) => b.total - a.total);
+  const total = casks.reduce((s, c) => s + c.total, 0);
+
+  document.getElementById("tiles").innerHTML =
+    `<div class="card tile"><div class="label">All apps</div><div class="value">${fmt.format(total)}</div><div class="meta">downloads in total</div></div>` +
+    casks.map(c => {
+      const latest = c.versions[c.versions.length - 1];
+      const delta = sevenDayDelta(c.token);
+      return `<div class="card tile">
+        <div class="label"><i class="swatch" style="background:var(${color[c.token]})"></i>${c.name}</div>
+        <div class="value">${fmt.format(c.total)}</div>
+        <div class="meta">${delta === null ? "" : `<span class="delta">+${fmt.format(delta)}</span> last 7 days · `}v${latest?.version ?? "–"}</div>
+      </div>`;
+    }).join("");
+
+  document.getElementById("legend").innerHTML = casks.map(c =>
+    `<span><i class="swatch" style="background:var(${color[c.token]})"></i>${c.name}</span>`).join("");
+
+  document.getElementById("rows").innerHTML = casks.flatMap(c => [...c.versions].reverse().map(v => `<tr>
+    <td><span class="app"><i class="swatch" style="background:var(${color[c.token]})"></i>${c.name}</span></td>
+    <td>${v.version}</td><td>${v.published ? day(v.published) : "–"}</td><td class="num">${fmt.format(v.downloads)}</td></tr>`)).join("");
+
+  const empty = document.getElementById("empty");
+  const single = data.history.length < 2;
+  empty.hidden = !single;
+  document.getElementById("chart").hidden = single; // one point per app is not a trend yet
+  empty.textContent = single ? `History starts ${day(data.history[0].date)}; the chart fills in as daily snapshots arrive.` : "";
+
+  chart?.destroy();
+  chart = new Chart(document.getElementById("chart"), {
+    type: "line",
+    data: {
+      labels: data.history.map(h => h.date),
+      datasets: casks.map(c => ({
+        label: c.name,
+        data: data.history.map(h => h.totals[c.token] ?? null),
+        borderColor: css(color[c.token]), backgroundColor: css(color[c.token]),
+        borderWidth: 2, tension: 0, pointRadius: 0, pointHoverRadius: 5,
+        pointHoverBorderColor: css("--surface"), pointHoverBorderWidth: 2,
+      })),
+    },
+    options: {
+      maintainAspectRatio: false, animation: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: css("--surface"), titleColor: css("--ink"), bodyColor: css("--ink-2"),
+          borderColor: css("--axis"), borderWidth: 1, padding: 10, boxPadding: 4, usePointStyle: true,
+          callbacks: { title: items => day(items[0].label) },
+        },
+      },
+      scales: {
+        x: { grid: { display: false }, border: { color: css("--axis") },
+             ticks: { color: css("--muted"), maxTicksLimit: 8, callback(v) { return day(this.getLabelForValue(v)); } } },
+        y: { beginAtZero: true, grid: { color: css("--grid") }, border: { display: false },
+             ticks: { color: css("--muted"), precision: 0 } },
+      },
+    },
+  });
+}
+
+fetch("downloads.json", { cache: "no-store" })
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(json => {
+    data = json;
+    document.getElementById("updated").textContent = `Updated ${new Date(data.updated).toLocaleString("en", { dateStyle: "medium", timeStyle: "short" })}.`;
+    render();
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+  })
+  .catch(() => { document.getElementById("tiles").innerHTML = `<p class="note">No data yet: the first collection run has not finished.</p>`; });
+</script>
+</body>
+</html>

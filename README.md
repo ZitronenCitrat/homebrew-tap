@@ -2,6 +2,8 @@
 
 Personal macOS apps, installable with [Homebrew](https://brew.sh).
 
+📊 **[Tap Insights](https://zitronencitrat.github.io/homebrew-tap/)**: downloads per app and version, updated daily.
+
 ```bash
 brew tap zitronencitrat/tap
 brew trust zitronencitrat/tap   # Homebrew 7.0.11+ only loads casks from taps you trust
@@ -74,6 +76,12 @@ xattr -dr com.apple.quarantine "/Applications/ClaudeDesktopCompanion.app"
 Then open the app and finish setup in Einstellungen ▸ Hooks.
 
 ---
+
+## For me: Tap Insights
+
+[`.github/workflows/dashboard.yml`](.github/workflows/dashboard.yml) runs daily (and on pushes to `Casks/` or `dashboard/`). It reads the download count of every cask's release assets ([`dashboard/collect.py`](dashboard/collect.py); new casks are picked up from their `url` automatically), appends a snapshot to `downloads.json` on the `stats` branch and deploys [`dashboard/index.html`](dashboard/index.html) to GitHub Pages. Run it by hand: Actions ▸ Dashboard ▸ Run workflow.
+
+Homebrew has no install analytics for third-party taps, so the numbers are GitHub release downloads: installs + updates (+ manual downloads), not unique users. GitHub pauses scheduled workflows after 60 days without repository activity; re-enable it in the Actions tab if the page stops updating.
 
 ## For me: publishing a release
 
