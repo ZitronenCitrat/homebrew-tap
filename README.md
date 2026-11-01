@@ -4,6 +4,7 @@ Personal macOS apps, installable with [Homebrew](https://brew.sh).
 
 ```bash
 brew tap zitronencitrat/tap
+brew trust zitronencitrat/tap   # Homebrew 7.0.11+ only loads casks from taps you trust
 ```
 
 | Cask | App | macOS |
