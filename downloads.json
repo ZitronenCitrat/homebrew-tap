@@ -1,0 +1,59 @@
+{
+ "history": [
+  {
+   "date": "2026-11-01",
+   "totals": {
+    "claude-desktop-companion": 2,
+    "planner": 6,
+    "pokedex-portfolio": 2
+   }
+  }
+ ],
+ "casks": [
+  {
+   "token": "claude-desktop-companion",
+   "name": "Claude Desktop Companion",
+   "repo": "ZitronenCitrat/ClaudeDesktopCompanion",
+   "versions": [
+    {
+     "version": "1.0",
+     "published": "2026-06-04T20:06:30Z",
+     "downloads": 2
+    }
+   ],
+   "total": 2
+  },
+  {
+   "token": "planner",
+   "name": "Planner",
+   "repo": "ZitronenCitrat/homebrew-tap",
+   "versions": [
+    {
+     "version": "0.1",
+     "published": "2026-10-30T00:27:07Z",
+     "downloads": 3
+    },
+    {
+     "version": "0.2",
+     "published": "2026-10-30T17:42:21Z",
+     "downloads": 3
+    }
+   ],
+   "total": 6
+  },
+  {
+   "token": "pokedex-portfolio",
+   "name": "Pokédex Portfolio",
+   "repo": "ZitronenCitrat/homebrew-tap",
+   "versions": [
+    {
+     "version": "1.0",
+     "published": "2026-11-01T21:05:42Z",
+     "downloads": 2
+    }
+   ],
+   "total": 2
+  }
+ ],
+ "updated": "2026-11-01T22:44:02+00:00"
+}
