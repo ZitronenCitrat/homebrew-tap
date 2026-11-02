@@ -12,7 +12,7 @@
    "date": "2026-11-02",
    "totals": {
     "claude-desktop-companion": 2,
-    "planner": 6,
+    "planner": 8,
     "pokedex-portfolio": 10
    }
   }
@@ -49,10 +49,10 @@
     {
      "version": "0.3",
      "published": "2026-11-02T00:38:58Z",
-     "downloads": 0
+     "downloads": 2
     }
    ],
-   "total": 6
+   "total": 8
   },
   {
    "token": "pokedex-portfolio",
@@ -83,5 +83,5 @@
    "total": 10
   }
  ],
- "updated": "2026-11-02T00:39:12+00:00"
+ "updated": "2026-11-02T12:25:01+00:00"
 }
