@@ -1,6 +1,6 @@
 cask "planner" do
-  version "0.2"
-  sha256 "6d9c70d9c9cf531828b5cd2453a80fc952b188825bfe87b096fc42abe89c0d11"
+  version "0.3"
+  sha256 "ee7b3e2a3bd5ad4915006a7e7000d53799ddc5c68f31e816583367596633519e"
 
   url "https://github.com/ZitronenCitrat/homebrew-tap/releases/download/planner-v#{version}/Planner-#{version}.zip"
   name "Planner"
