@@ -39,6 +39,14 @@
     "planner": 10,
     "pokedex-portfolio": 13
    }
+  },
+  {
+   "date": "2026-11-06",
+   "totals": {
+    "claude-desktop-companion": 2,
+    "planner": 10,
+    "pokedex-portfolio": 14
+   }
   }
  ],
  "casks": [
@@ -85,7 +93,7 @@
   },
   {
    "token": "pokedex-portfolio",
-   "name": "Pokédex Portfolio",
+   "name": "HoloDex",
    "repo": "ZitronenCitrat/homebrew-tap",
    "versions": [
     {
@@ -111,11 +119,11 @@
     {
      "version": "1.4",
      "published": "2026-11-03T20:58:05Z",
-     "downloads": 2
+     "downloads": 3
     }
    ],
-   "total": 13
+   "total": 14
   }
  ],
- "updated": "2026-11-05T12:21:42+00:00"
+ "updated": "2026-11-06T11:31:41+00:00"
 }
