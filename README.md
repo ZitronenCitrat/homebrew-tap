@@ -28,7 +28,7 @@ Formerly *Pokédex Portfolio*. Native macOS app for trading card collectors: ful
 - **Prices:** Cardmarket prices (EUR) for every card you own, loaded in the background with visible progress and gentle rate limiting; "Reload images & prices" per set.
 - **Dashboard:** total value with history, your 5 most valuable cards, the most valuable cards worldwide (TCGplayer, USD, updated weekly), recent additions, biggest movers, Pokédex progress. Pick the blocks you want in Settings.
 
-> The new look, background prices, worldwide ranking and the HoloDex name arrive with version **1.5**; `brew upgrade` picks it up once it is released.
+> **New in 1.5:** the HoloDex name and look, background prices, the worldwide ranking and images for sets that had none. Update with `brew update && brew upgrade --cask pokedex-portfolio`.
 
 The cask keeps its name `pokedex-portfolio` and the app bundle stays `PokePortfolio.app`, so existing installs update in place and keep their collection.
 
