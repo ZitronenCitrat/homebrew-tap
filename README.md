@@ -11,7 +11,7 @@ brew trust zitronencitrat/tap   # Homebrew 7.0.11+ only loads casks from taps yo
 
 | Cask | App | macOS |
 |---|---|---|
-| [`pokedex-portfolio`](#pokédex-portfolio) | **Pokédex Portfolio**: Pokémon TCG collection manager with Pokédex, EN/DE/JA card catalog and Cardmarket prices | 27+, Apple Silicon |
+| [`pokedex-portfolio`](#holodex) | **HoloDex** (formerly Pokédex Portfolio): TCG collection manager with Pokédex, EN/DE/JA card catalog and Cardmarket prices | 27+, Apple Silicon |
 | [`planner`](#planner) | **Planner**: a personal planner for student life: calendar, tasks, studies, habits, goals and subscriptions | 27+ |
 | [`claude-desktop-companion`](#claude-desktop-companion) | **[ClaudeDesktopCompanion](https://github.com/ZitronenCitrat/ClaudeDesktopCompanion)**: menu bar companion that shows what Claude Code is doing | 26+ |
 
@@ -19,9 +19,11 @@ brew trust zitronencitrat/tap   # Homebrew 7.0.11+ only loads casks from taps yo
 
 ---
 
-## Pokédex Portfolio
+## HoloDex
 
-Native macOS app for Pokémon TCG collectors: full Pokédex, card catalog in English, German and Japanese, collections and wishlist, and card prices that always show source, currency and date. Runs locally, no account, no API keys, no tracking.
+Formerly *Pokédex Portfolio*. Native macOS app for trading card collectors: full Pokédex, card catalog in English, German and Japanese, collections and wishlist, and card prices that always show source, currency and date. Your favourite starter sets the app's accent colour. Runs locally, no account, no API keys, no tracking.
+
+The cask keeps its name `pokedex-portfolio` and the app bundle stays `PokePortfolio.app`, so existing installs update in place and keep their collection.
 
 ```bash
 brew install --cask zitronencitrat/tap/pokedex-portfolio
@@ -39,7 +41,7 @@ brew install --cask zitronencitrat/tap/pokedex-portfolio
 
 App zips are attached to the [`pokedex-portfolio-v*` releases](https://github.com/ZitronenCitrat/homebrew-tap/releases) of this repo.
 
-<sub>Unofficial fan project, not affiliated with Nintendo, Creatures, GAME FREAK or The Pokémon Company. Card data and images are loaded at runtime from TCGdex, PokéAPI and TCGCSV; none are bundled.</sub>
+<sub>Private, non-commercial fan project. Not affiliated with, endorsed or reviewed by Nintendo, Creatures, GAME FREAK, The Pokémon Company or the app Pokefolio. Pokémon and all related names are trademarks of their respective owners. Card data and images are loaded at runtime from TCGdex, PokéAPI and TCGCSV; none are bundled. Prices are informational only, without warranty.</sub>
 
 ## Planner
 
@@ -87,6 +89,6 @@ Homebrew has no install analytics for third-party taps, so the numbers are GitHu
 
 | App | How |
 |---|---|
-| Pokédex Portfolio | Bump `MARKETING_VERSION`, commit, run `scripts/release.sh` in the app repo (builds, uploads the zip, bumps the cask, pushes) |
+| HoloDex | Bump `MARKETING_VERSION`, commit, run `scripts/release.sh` in the app repo (builds, uploads the zip, bumps the cask, pushes) |
 | Planner | Automatic: its own pipeline builds, uploads the zip and bumps the cask |
 | Claude Desktop Companion | Upload the zip to a release in its repo, update `version` and `sha256` in the cask (`shasum -a 256 <zip>`) |

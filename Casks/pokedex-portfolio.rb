@@ -3,8 +3,8 @@ cask "pokedex-portfolio" do
   sha256 "ec609abfd0271391bad10118af5837cdc47e04a89ac66c2e350431751e7e44b4"
 
   url "https://github.com/ZitronenCitrat/homebrew-tap/releases/download/pokedex-portfolio-v#{version}/PokePortfolio-#{version}.zip"
-  name "Pokédex Portfolio"
-  desc "Pokémon TCG collection manager with Pokédex, EN/DE/JA card catalog and prices"
+  name "HoloDex"
+  desc "Trading card collection manager with Pokédex, EN/DE/JA card catalog and prices"
   homepage "https://github.com/ZitronenCitrat/homebrew-tap"
 
   depends_on arch: :arm64
