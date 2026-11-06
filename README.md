@@ -23,6 +23,13 @@ brew trust zitronencitrat/tap   # Homebrew 7.0.11+ only loads casks from taps yo
 
 Formerly *Pokédex Portfolio*. Native macOS app for trading card collectors: full Pokédex, card catalog in English, German and Japanese, collections and wishlist, and card prices that always show source, currency and date. Your favourite starter sets the app's accent colour. Runs locally, no account, no API keys, no tracking.
 
+- **Catalog:** every Pokémon with stats and evolutions, all sets in EN/DE/JA with images (missing ones are filled from TCGplayer).
+- **Collections:** quantities, variants, conditions and languages; select a whole set at once; sort by price, group by set and fold sets in and out with their value.
+- **Prices:** Cardmarket prices (EUR) for every card you own, loaded in the background with visible progress and gentle rate limiting; "Reload images & prices" per set.
+- **Dashboard:** total value with history, your 5 most valuable cards, the most valuable cards worldwide (TCGplayer, USD, updated weekly), recent additions, biggest movers, Pokédex progress. Pick the blocks you want in Settings.
+
+> The new look, background prices, worldwide ranking and the HoloDex name arrive with version **1.5**; `brew upgrade` picks it up once it is released.
+
 The cask keeps its name `pokedex-portfolio` and the app bundle stays `PokePortfolio.app`, so existing installs update in place and keep their collection.
 
 ```bash
@@ -32,6 +39,7 @@ brew install --cask zitronencitrat/tap/pokedex-portfolio
 - **No Gatekeeper step needed:** the cask clears the quarantine flag itself.
 - **Your collection is backed up automatically:** on the first launch of every new version the app copies it to its own container (`…/Application Support/de.felixfischer.PokedexPortfolioDesktop/Backups/`, newest 10) before anything is migrated.
 - First launch downloads the card catalog (~20 MB) and the Pokédex (~2 MB).
+- **Network use:** card prices trickle in, two requests at a time with a short pause between them; the worldwide ranking reads TCGCSV's price lists of all sets once a week (~700 requests over a few minutes) and can be switched off in Settings.
 
 | Task | Command |
 |---|---|
