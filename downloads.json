@@ -45,7 +45,7 @@
    "totals": {
     "claude-desktop-companion": 2,
     "planner": 10,
-    "pokedex-portfolio": 14
+    "pokedex-portfolio": 16
    }
   }
  ],
@@ -124,11 +124,11 @@
     {
      "version": "1.5",
      "published": "2026-11-06T11:41:32Z",
-     "downloads": 0
+     "downloads": 2
     }
    ],
-   "total": 14
+   "total": 16
   }
  ],
- "updated": "2026-11-06T11:41:46+00:00"
+ "updated": "2026-11-06T12:06:52+00:00"
 }
