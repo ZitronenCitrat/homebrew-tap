@@ -1,6 +1,6 @@
 cask "pokedex-portfolio" do
-  version "1.6"
-  sha256 "081946b60693f34f100d932a5c0b0f6392f9c2899518ca856a2c004322f573a3"
+  version "1.7"
+  sha256 "1bad36b5ab2bf0ecae9adfa27dfd0de96564785ffa70399b969bbff7d4056ab1"
 
   url "https://github.com/ZitronenCitrat/homebrew-tap/releases/download/pokedex-portfolio-v#{version}/PokePortfolio-#{version}.zip"
   name "HoloDex"
