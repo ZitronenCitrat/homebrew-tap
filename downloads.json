@@ -47,6 +47,14 @@
     "planner": 10,
     "pokedex-portfolio": 16
    }
+  },
+  {
+   "date": "2026-11-07",
+   "totals": {
+    "claude-desktop-companion": 2,
+    "planner": 10,
+    "pokedex-portfolio": 16
+   }
   }
  ],
  "casks": [
@@ -125,10 +133,15 @@
      "version": "1.5",
      "published": "2026-11-06T11:41:32Z",
      "downloads": 2
+    },
+    {
+     "version": "1.6",
+     "published": "2026-11-07T00:07:40Z",
+     "downloads": 0
     }
    ],
    "total": 16
   }
  ],
- "updated": "2026-11-06T12:06:52+00:00"
+ "updated": "2026-11-07T00:07:53+00:00"
 }
